@@ -9,12 +9,12 @@ const cartSlice = createSlice({
     changed: false,
   },
   reducers: {
-    replaceData(state,action){
-      state.totalQuantity = action.payload.totalQuantity
-      state.itemsList = action.payload.itemsList
+    replaceData(state, action) {
+      state.totalQuantity = action.payload.totalQuantity;
+      state.itemsList = action.payload.itemsList;
     },
     addToCart(state, action) {
-      state.changed = true
+      state.changed = true;
       const newItem = action.payload;
       // to check if the item is already available
       const existingItem = state.itemsList.find(
@@ -32,7 +32,7 @@ const cartSlice = createSlice({
           name: newItem.name,
           description: newItem.description,
           imageSrc: newItem.imageSrc,
-          imageAlt: newItem.imageAlt
+          imageAlt: newItem.imageAlt,
         });
         state.totalQuantity++;
       }
@@ -41,12 +41,12 @@ const cartSlice = createSlice({
       const existingItem = state.itemsList.find(
         (item) => item.id === action.payload.id
       );
-      if(existingItem){
-        existingItem.quantity = action.payload.quantity
+      if (existingItem) {
+        existingItem.quantity = action.payload.quantity;
       }
     },
     removeFromCart(state, action) {
-      state.changed = true
+      state.changed = true;
       const id = action.payload;
 
       const existingItem = state.itemsList.find((item) => item.id === id);
@@ -61,6 +61,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, replaceData, removeFromCart, changeQuantity } = cartSlice.actions;
+export const { addToCart, replaceData, removeFromCart, changeQuantity } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

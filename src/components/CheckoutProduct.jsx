@@ -1,24 +1,18 @@
-import Image from "next/image";
-import { StarIcon } from "@heroicons/react/solid";
-import Currency from "react-currency-formatter";
-import { useDispatch, useSelector } from "react-redux";
-import { addToBasket, removeFromBasket } from "../slices/basketSlice";
-import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XIcon } from "@heroicons/react/solid";
+import { useDispatch } from "react-redux";
+import { XMarkIcon, CheckIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { changeQuantity, removeFromCart } from "../slices/cartSlice";
 
-function CheckoutProduct({
-  product, productIdx
-}) {
+function CheckoutProduct({ product, productIdx }) {
   const dispatch = useDispatch();
 
-  const changeProductQuantity= (quantity)  => {
+  const changeProductQuantity = (quantity) => {
     let payload = {
       id: product.id,
-      quantity : parseInt(quantity)
-    }
+      quantity: parseInt(quantity),
+    };
     console.log(payload);
-    dispatch(changeQuantity(payload))
-  }
+    dispatch(changeQuantity(payload));
+  };
 
   return (
     <li className="flex py-6 sm:py-10">
@@ -84,7 +78,7 @@ function CheckoutProduct({
                 className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
               >
                 <span className="sr-only">Remove</span>
-                <XIcon className="h-5 w-5" aria-hidden="true" />
+                <XMarkIcon className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>

@@ -14,9 +14,10 @@ const app = !admin.apps.length
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
-    
+
 const fulfillOrder = async (session) => {
   console.log("Fulling order", session);
+  const products = await stripe.product.list();
 
   return app
     .firestore()
@@ -29,6 +30,7 @@ const fulfillOrder = async (session) => {
       amount_shipping: session.total_details.amount_shipping / 100,
       images: JSON.parse(session.metadata.images),
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      products,
     })
     .then(() => {
       console.log(`Success: Order ${session.id} has been added to the DB`);

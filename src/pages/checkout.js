@@ -6,12 +6,7 @@ import { useSession } from "next-auth/react";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import Head from "next/head";
-import {
-  CheckIcon,
-  ClockIcon,
-  QuestionMarkCircleIcon,
-  XIcon,
-} from "@heroicons/react/solid";
+import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 const stripePromise = loadStripe(process.env.stripe_public_key);
 
 function Checkout() {
@@ -25,7 +20,7 @@ function Checkout() {
 
   const createCheckoutSession = async () => {
     const stripe = await stripePromise;
-    
+
     // Call the backend to create a checkout session
     const checkoutSession = await axios.post("/api/create-checkout-session", {
       items: cart.itemsList,
@@ -33,7 +28,7 @@ function Checkout() {
     });
 
     console.log(checkoutSession.data.id);
-    
+
     // Redirect user/customer to stripe checkout
     const result = await stripe.redirectToCheckout({
       sessionId: checkoutSession.data.id,
@@ -72,7 +67,9 @@ function Checkout() {
                     ))}
                   </ul>
                 ) : (
-                  <div className="divide-y divide-gray-200 border-t border-gray-200 p-5 text-xl">*No items in the cart</div>
+                  <div className="divide-y divide-gray-200 border-t border-gray-200 p-5 text-xl">
+                    *No items in the cart
+                  </div>
                 )}
               </section>
 
@@ -145,13 +142,17 @@ function Checkout() {
                   <button
                     type="button"
                     onClick={createCheckoutSession}
-                    disabled={!session || (cart.itemsList.length == 0)}
+                    disabled={!session || cart.itemsList.length == 0}
                     className={`w-full rounded-md border border-transparent bg-secondary px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-50 ${
                       (!session || cart.itemsList.length == 0) &&
                       "from-gray-300 to-gray-500 border-gray-200 text-gray-300 cursor-not-allowed text-center"
                     }`}
                   >
-                    {!session ? "Sign in to checkout" : (cart.itemsList.length == 0 ? "Add Items to cart" : "Proceed to checkout")}
+                    {!session
+                      ? "Sign in to checkout"
+                      : cart.itemsList.length == 0
+                      ? "Add Items to cart"
+                      : "Proceed to checkout"}
                   </button>
                 </div>
               </section>

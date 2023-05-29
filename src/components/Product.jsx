@@ -1,9 +1,4 @@
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { StarIcon } from "@heroicons/react/solid";
-import Currency from "react-currency-formatter";
 import { useDispatch } from "react-redux";
-import { addToBasket } from "../slices/basketSlice";
 import { addToCart } from "../slices/cartSlice";
 
 function Product({ product }) {
